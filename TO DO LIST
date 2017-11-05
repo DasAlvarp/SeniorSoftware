@@ -1,0 +1,12 @@
+To do:
+
+1. Each team have dynamic scores (based on categories) and scores linked only to them
+
+2. Calculate overall score as a culmunation of the subscores and displaying all seperately
+
+3. Way to combine all of the judges scores into one
+
+4. Verify that all judges scores given are independent of each other
+
+
+******should judges scores be an attribute of the judge or team??? -i think judge but corresponds to team however I'm not sure

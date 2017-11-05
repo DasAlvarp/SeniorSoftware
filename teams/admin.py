@@ -3,7 +3,9 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from .models import Team, Category, Member
+from django import forms
+
+from .models import Team, Category, Member, ScoringCriteria
 
 
 
@@ -17,7 +19,11 @@ class TeamAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     pass
 
+class ScoringCriteriaAdmin(admin.ModelAdmin):
+    pass
 
+
+admin.site.register(ScoringCriteria, ScoringCriteriaAdmin)
 admin.site.register(Member, MemberAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Category, CategoryAdmin)
