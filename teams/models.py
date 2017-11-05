@@ -6,9 +6,19 @@ from django.contrib import admin
 from django import forms
 
 
+
+
+class ScoringCriteria(models.Model):
+    criteriaName = models.CharField(max_length = 100)
+
+    def __str__(self):
+        return self.criteriaName
+
+
 class Category(models.Model):
 
     category = models.CharField(max_length=200)
+    criteria = models.ManyToManyField(ScoringCriteria, blank = True)
 
     def __str__(self):
         return self.category
@@ -19,9 +29,6 @@ class Member(models.Model):
 
     def __str__(self):
         return self.memberName
-
-class ScoringCriteria(models.Model):
-    criteriaName = models.CharField(max_length = 100)
 
 
 class Team(models.Model):
