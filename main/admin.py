@@ -8,19 +8,17 @@ from django import forms
 from .models import Team, Category, Member, ScoringCriteria
 
 
-
-
 class MemberAdmin(admin.ModelAdmin):
-    pass
+	pass
 
 class TeamAdmin(admin.ModelAdmin):
-    pass
+	pass
 
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+	pass
 
 class ScoringCriteriaAdmin(admin.ModelAdmin):
-    pass
+	pass
 
 
 admin.site.register(ScoringCriteria, ScoringCriteriaAdmin)
