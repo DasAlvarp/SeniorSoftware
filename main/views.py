@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 
-from django.http import HttpResponse
+# Create your views here.
 
-def index(request):
-    return HttpResponse("Welcome to the main")
+def home(request):
+    return render(request, 'dir.html')
