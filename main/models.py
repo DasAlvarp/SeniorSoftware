@@ -38,7 +38,12 @@ class Team(models.Model):
 	teamName = models.CharField(max_length=200)
 	category = models.ManyToManyField(Category, blank=False)
 	member = models.ManyToManyField(Member, blank=True)
-	score = models.IntegerField()
 
 	def __str__(self):
 		return self.teamName
+
+class Score(models.Model):
+	teamName = models.ForeignKey(Team)
+	category = models.ForeignKey(Category)
+	judge = models.CharField(max_length=200)
+	score = models.IntegerField()
