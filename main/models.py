@@ -12,7 +12,6 @@ from django.core.validators import MaxValueValidator
 
 class ScoringCriteria(models.Model):
 	criteriaName = models.CharField(max_length = 100)
-	score =  models.PositiveIntegerField(default=0, validators=[MaxValueValidator(10),])
 
 	def __str__(self):
 		return self.criteriaName
@@ -43,7 +42,12 @@ class Team(models.Model):
 		return self.teamName
 
 class Score(models.Model):
-	teamName = models.ForeignKey(Team)
-	category = models.ForeignKey(Category)
+	teamName = models.ForeignKey('Team')
+	category = models.ForeignKey('Category')
 	judge = models.CharField(max_length=200)
-	score = models.IntegerField()
+	score1 = models.DecimalField(decimal_places=1, max_digits=2)
+	score2 = models.DecimalField(decimal_places=1, max_digits=2)
+	score3 = models.DecimalField(decimal_places=1, max_digits=2)
+
+	def __str__(self):
+		return self.judge

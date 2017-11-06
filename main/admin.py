@@ -5,7 +5,7 @@ from django.contrib import admin
 
 from django import forms
 
-from .models import Team, Category, Member, ScoringCriteria
+from .models import Team, Category, Member, ScoringCriteria, Score
 
 
 class MemberAdmin(admin.ModelAdmin):
@@ -20,8 +20,11 @@ class CategoryAdmin(admin.ModelAdmin):
 class ScoringCriteriaAdmin(admin.ModelAdmin):
 	pass
 
+class ScoreAdmin(admin.ModelAdmin):
+	pass
 
 admin.site.register(ScoringCriteria, ScoringCriteriaAdmin)
 admin.site.register(Member, MemberAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Score)
