@@ -13,3 +13,9 @@ def home(request):
 
 def homepage(request):
     return HttpResponseRedirect('/main')
+
+def judge(request):
+    return HttpResponse('judge section')
+
+def registrar(request):
+    return HttpResponse('registrar section')
