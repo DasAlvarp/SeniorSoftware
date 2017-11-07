@@ -10,15 +10,23 @@ from .models import *
 
 def index(request):
     return HttpResponse("Welcome to index.")
-
 def teams(request):
+    #get list of all teams
 	teamList = Team.objects.all()
+
+    #get list of categories corresponding to teams
+	category = [[cat for cat in team.category.all()] for team in teamList]
+
+    #put into dictionary
+	categoryAndTeam = dict(zip(teamList, category))
+    
 	template = loader.get_template('teams.html')
 	context = {
 		'teamList':teamList,
+		'categoryAndTeam' :categoryAndTeam,
 	}
-
 	return HttpResponse(template.render(context,request))
+
 
 def judgeTeam(request):
 	# Get the team name from the url

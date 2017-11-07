@@ -4,26 +4,30 @@
 	<head>
 		<title>Heading Example</title>
 	</head>
-	
+
 	<body>
-	Testing
-
-
 	{% if teamList %}
 	<table class="table table-hover">
 		<thead>
 			<tr>
 				<th>Team</th>
+				<th>Entries</th>
+				<th>Link to Judge</th>
 			</tr>
 		</thead>
 		<tbody>
-		{% for x in teamList %}
-			<tr>
-					<td>{{ x }}</td>
-					<td><a class="btn btn-primary" href="/judgeTeam/?team={{x}}">Judge</a></td>
-			</tr>
+		{% for team,category in categoryAndTeam.items %}
+
+					{% for c in category %}
+					<tr>
+							<td>{{ team }}</td>
+							<td>{{ c }}</td>
+							<td><a class="btn btn-primary" href="/judgeTeam/?team={{team}}">Judge</a></td>
+					</tr>
+					{% endfor %}
+
 	{% endfor %}
-		</tbody>
+	</tbody>
 	</table>
 {% else %}
 	<p>No Teams are available.</p>
