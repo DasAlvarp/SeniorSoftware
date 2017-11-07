@@ -1,12 +1,14 @@
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, render
+from django import template
+from django.template.loader import get_template
 
 from .models import Question
 
 def index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
     output = ', '.join([q.question_text for q in latest_question_list])
-    template = loader.get_template('registrar/index.html')
+    template = get_template('registrar/index.html')
     context = {
         'latest_question_list': latest_question_list,
     }
