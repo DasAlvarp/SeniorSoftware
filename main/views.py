@@ -12,20 +12,53 @@ def index(request):
     return HttpResponse("Welcome to index.")
 def teams(request):
     #get list of all teams
-	teamList = Team.objects.all()
+	teamList1 = Team.objects.all()
 
     #get list of categories corresponding to teams
-	category = [[cat for cat in team.category.all()] for team in teamList]
+	category = [[cat for cat in team.category.all()] for team in teamList1]
 
     #put into dictionary
-	categoryAndTeam = dict(zip(teamList, category))
-    
+	categoryAndTeam = dict(zip(teamList1, category))
+
 	template = loader.get_template('teams.html')
 	context = {
-		'teamList':teamList,
+		'teamList':teamList1,
 		'categoryAndTeam' :categoryAndTeam,
 	}
 	return HttpResponse(template.render(context,request))
+
+def results(request):
+	teamList = Team.objects.all()
+	testList= Score.objects.only('score1')
+	scores = {}
+	count=1
+	teams = Team.objects.all()
+	for team in list(teams):
+       		scores.update({team.teamName.encode('utf8'):0})
+        	tmp = Score.objects.filter(teamName=team)
+        	totalAvg = 0
+        	for scr in list(tmp):
+            	 avg = 0
+            	 avg += (scr.score1)
+            	 avg += (scr.score2)
+            	 avg += (scr.score3)
+            	 avg = avg/3
+            	 totalAvg += avg
+            	 count += 1
+        	totalAvg = totalAvg/count
+        	scores[team.teamName.encode('utf8')] += totalAvg
+        	count =1
+
+	template = loader.get_template('results.html')
+	context = {
+		'teamList':teamList,
+		'testList':testList,
+		'scores':scores,
+
+	}
+
+	return HttpResponse(template.render(context,request))
+
 
 
 def judgeTeam(request):
