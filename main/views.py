@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import loader
 from django.http import HttpResponse
 from .models import *
@@ -29,24 +29,48 @@ def teams(request):
 
 
 def judgeTeam(request):
-	# Get the team name from the url
+	# Get the team name and category entered from the url
 	team = request.GET['team']
+	category = request.GET['category']
 
-	#load template
-	template = loader.get_template('judge.html')
+	# Retrieve team object and category object from DB to list scoring criteria on the form
+	teamObj = Team.objects.get(teamName__exact=team)
+	cat = Category.objects.get(category__exact=category)
+	crit = list(cat.criteria.all())
+	criteria = [c.criteriaName for c in crit]
 
-	# get the list of categories the team entered in
-	categoryList = Team.objects.get(teamName__exact=team)
-	categoryList = categoryList.category.all()
+	# Load the model form
+	form = ScoreForm()
 
-	# 2d array of the criteria
-	criteria = [[crit for crit in cat.criteria.all()] for cat in categoryList]
+	# check if this judge has already scored this team for this category, load their scores if they have
+	score = Score.objects.filter(teamName=teamObj, category=cat, judge=request.user)
+	update = False
+	if score:
+		update = True
+		form.fields['score1'].initial = score[0].score1
+		form.fields['score2'].initial = score[0].score2
+		form.fields['score3'].initial = score[0].score3
 
-	# create a dictionary of the categories and their criteria
-	catAndCrit = dict(zip(categoryList, criteria))
+	# update entry if judge already scored, create a new score if they haven't
+	if request.method == 'POST' and update:
+		form = ScoreForm(request.POST, instance=score[0])
+		if form.is_valid():
+			form.save()
+		return redirect('/teams')
+	elif request.method =='POST':
+		form = ScoreForm(request.POST)
+		if form.is_valid():
+			score = form.save(commit=False)
+			score.teamName = teamObj
+			score.category = cat
+			score.judge = request.user
+			score.save()
+		return redirect('/teams')
 
 	context = {
 		'team':team,
-		'catAndCrit':catAndCrit,
+		'category':category,
+		'criteria':criteria,
+		'ScoreForm':form,
 	}
-	return HttpResponse(template.render(context,request))
+	return render(request, 'judge.html', context)

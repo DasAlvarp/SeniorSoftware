@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.forms import ModelForm
 from django.contrib import admin
 from django import forms
 from django.core.validators import MaxValueValidator
@@ -51,3 +52,8 @@ class Score(models.Model):
 
 	def __str__(self):
 		return self.judge
+
+class ScoreForm(ModelForm):
+	class Meta:
+		model = Score
+		fields = ['score1', 'score2', 'score3']
