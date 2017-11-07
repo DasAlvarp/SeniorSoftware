@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<head>
+		<title>Judging {{team}}</title>
+	</head>
+	
+	<body>
+		<div class="container">
+			<h1> Please enter a score (1-5) for {{team}} in {{category}}</h1>
+			<br>
+			<form action="#" method="post">
+				{% csrf_token %}
+				{{ ScoreForm.non_field_errors }}
+				<div class="fieldWrapper">
+				    {{ ScoreForm.score1.errors }}
+				    <label for="{{ ScoreForm.score1.id_for_label }}">{{criteria.0}}:</label>
+				    {{ ScoreForm.score1 }}
+				</div>
+				<div class="fieldWrapper">
+				    {{ ScoreForm.score2.errors }}
+				    <label for="{{ ScoreForm.score2.id_for_label }}">{{criteria.1}}:</label>
+				    {{ ScoreForm.score2 }}
+				</div>
+				<div class="fieldWrapper">
+				    {{ ScoreForm.score3.errors }}
+				    <label for="{{ ScoreForm.score3.id_for_label }}">{{criteria.2}}:</label>
+				    {{ ScoreForm.score3 }}
+				</div>
+				<input type="submit" value="Submit" />
+			</form>
+		</div>
+	</body>
+	
