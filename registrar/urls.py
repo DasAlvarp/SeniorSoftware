@@ -1,14 +1,12 @@
-from django.conf.urls import url
-from . import views
+from django.conf.urls import url, include
+from django.contrib.auth import views as auth_views
 
-app_name = 'registrar'
+from registrar.core import views as core_views
+
+
 urlpatterns = [
-    # ex: /registrar/
-    url(r'^$', views.index, name='index'),
-    # ex: /registrar/5/
-    url(r'^(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
-    # ex: /registrar/5/results/
-    url(r'^(?P<question_id>[0-9]+)/results/$', views.results, name='results'),
-    # ex: /registrar/5/vote/
-    url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
+    url(r'^$', core_views.home, name='home'),
+    url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
+    url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
+    url(r'^signup/$', core_views.signup, name='signup'),
 ]

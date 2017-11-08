@@ -17,8 +17,10 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^main/', include('main.urls')),
-    url(r'^judge/', include('judge.urls')),
-    url(r'^registrar/', include('registrar.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^$', core_views.home, name='home'),
+    url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
+    url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
+    url(r'^signup/$', core_views.signup, name='signup'),
+
 ]
